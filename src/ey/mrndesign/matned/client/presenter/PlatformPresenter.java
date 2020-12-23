@@ -1,24 +1,36 @@
 package ey.mrndesign.matned.client.presenter;
 
 import ey.mrndesign.matned.client.contract.GameContract;
+import ey.mrndesign.matned.client.contract.MoveType;
+import ey.mrndesign.matned.client.contract.Direction;
 import ey.mrndesign.matned.client.model.Game;
+import ey.mrndesign.matned.client.model.GameCore;
+import ey.mrndesign.matned.client.model.object.Species;
 
 public class PlatformPresenter implements GameContract.Presenter {
 
     private Game game;
 
-    @Override
-    public void move(GameContract.MoveType action, GameContract.Side direction) {
-
+    public PlatformPresenter() {
+        this.game = new GameCore();
     }
 
     @Override
-    public void looseLife() {
-
+    public void action(MoveType action, Direction side) {
+        switch (action){
+            case RUN:{
+                runAction();
+            }
+        }
     }
 
     @Override
-    public void finishLevel() {
+    public void looseLife(Species object) {
+
+    }
+
+
+    private void runAction() {
 
     }
 }

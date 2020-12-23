@@ -2,9 +2,7 @@ package ey.mrndesign.matned.client.screen;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.*;
 import ey.mrndesign.matned.client.contract.GameContract;
 import ey.mrndesign.matned.client.utils.Text;
 import ey.mrndesign.matned.client.view.PlatformView;
@@ -22,13 +20,18 @@ public class CanvasWidget extends Composite implements CanvasScreen{
         createCanvas();
         canvas = createCanvas();
         context = canvas.getContext2d();
-        view = new PlatformView(context);
+        view = new PlatformView(this, context);
         initWidget(canvas);
     }
 
     @Override
     public void run() {
         view.currentSituation();
+    }
+
+    @Override
+    public FocusWidget getCanva() {
+        return canvas;
     }
 
 

@@ -1,37 +1,34 @@
 package ey.mrndesign.matned.client.contract;
 
+import ey.mrndesign.matned.client.model.object.Species;
+
 public class GameContract {
 
-    public interface View{
+    public interface View {
 
         void currentSituation();
 
-        void onStand();
-        void onMove();
-        void onJump();
-        void onShoot();
-        void onLooseHealth();
-        void uponDeath();
+        void onStand(Direction side);
+
+        void onMove(Direction side);
+
+        void onJump(Direction side);
+
+        void onShoot(Direction side);
+
+        void onLooseHealth(Direction side);
+
+        void uponDeath(Direction side);
+
         void uponLevelWin();
     }
 
-    public interface Presenter{
+    public interface Presenter {
 
-        void move(MoveType action, Side direction);
-        void looseLife();
-        void finishLevel();
+        void action(MoveType action, Direction side);
+
+        void looseLife(Species object);
 
     }
 
-    public enum Side{
-        LEFT,
-        RIGHT
-    }
-
-    public enum MoveType{
-        STAND,
-        RUN,
-        JUMP,
-        SHOOT
-    }
 }

@@ -4,7 +4,10 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 import ey.mrndesign.matned.client.contract.GameContract;
+import ey.mrndesign.matned.client.contract.MoveType;
+import ey.mrndesign.matned.client.contract.Direction;
 import ey.mrndesign.matned.client.presenter.PlatformPresenter;
+import ey.mrndesign.matned.client.screen.CanvasScreen;
 import ey.mrndesign.matned.client.utils.Constants;
 import ey.mrndesign.matned.client.utils.Images;
 
@@ -18,22 +21,25 @@ public class PlatformView implements GameContract.View {
     private String backgroundImage;
     private int heroPosX;
     private int heroPosY;
-    private GameContract.MoveType currentAction;
-    private GameContract.Side currentDirection;
+    private MoveType currentAction;
+    private Direction currentDirection;
     private List<ViewEnvironment> environment;
     private ViewEnvironment hero;
+    private CanvasScreen screen;
 
-    public PlatformView(Context2d context) {
+    public PlatformView(CanvasScreen screen, Context2d context) {
+        this.screen = screen;
         this.context = context;
         this.presenter = new PlatformPresenter();
         this.backgroundImage = Images.BACKGROUND_IMAGE;
         heroPosX = Constants.DEFAULT_HERO_START_POS_X;
         heroPosY = Constants.DEFAULT_HERO_START_POS_Y;
         environment = new LinkedList<>();
-        currentAction = GameContract.MoveType.STAND;
-        currentDirection = GameContract.Side.RIGHT;
+        currentAction = MoveType.STAND;
+        currentDirection = Direction.RIGHT;
         hero = new Environment(HeroView.image(currentAction,currentDirection), heroPosX, heroPosY, Constants.HERO_WIDTH, Constants.HERO_HEIGHT);
         environment.add(hero);
+        addKeyListeners();
     }
 
     @Override
@@ -45,32 +51,32 @@ public class PlatformView implements GameContract.View {
     }
 
     @Override
-    public void onStand() {
+    public void onStand(Direction side) {
 
     }
 
     @Override
-    public void onMove() {
+    public void onMove(Direction side) {
 
     }
 
     @Override
-    public void onJump() {
+    public void onJump(Direction side) {
 
     }
 
     @Override
-    public void onShoot() {
+    public void onShoot(Direction side) {
 
     }
 
     @Override
-    public void onLooseHealth() {
+    public void onLooseHealth(Direction side) {
 
     }
 
     @Override
-    public void uponDeath() {
+    public void uponDeath(Direction side) {
 
     }
 
@@ -80,8 +86,17 @@ public class PlatformView implements GameContract.View {
     }
 
     private void addKeyListeners(){
-//  TODO
-    }
+        screen.getCanva().addKeyDownHandler(key ->{
+            if (key.isUpArrow()) presenter.action(MoveType.RUN, Direction.UP);
+            else if (key.isUpArrow() && key.isRightArrow()) presenter.action(MoveType.RUN, Direction.UP_RIGHT);
+            else if (key.isRightArrow()) presenter.action(MoveType.RUN, Direction.RIGHT);
+            else if (key.isRightArrow() && key.isDownArrow()) presenter.action(MoveType.RUN, Direction.RIGHT_DOWN);
+            else if (key.isDownArrow()) presenter.action(MoveType.RUN, Direction.DOWN);
+            else if (key.isDownArrow() && key.isLeftArrow()) presenter.action(MoveType.RUN, Direction.DOWN_LEFT);
+            else if (key.isLeftArrow()) presenter.action(MoveType.RUN, Direction.LEFT);
+            else if (key.isLeftArrow() && key.isUpArrow()) presenter.action(MoveType.RUN, Direction.LEFT_UP);
+        });
+     }
 
     private void paintOnCanva(String image, int posx, int posy, int sizex, int sizey) {
         ImageElement img = ImageElement.as(new Image(Constants.IMG_FOLDER + image).getElement());
