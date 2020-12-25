@@ -1,5 +1,7 @@
 package ey.mrndesign.matned.client.contract;
 
+import static ey.mrndesign.matned.client.utils.Constants.COCKROACH_SPEED;
+
 public enum Direction {
     UP,
     UP_RIGHT,
@@ -8,7 +10,8 @@ public enum Direction {
     DOWN,
     DOWN_LEFT,
     LEFT,
-    LEFT_UP;
+    LEFT_UP,
+    POINT;
 
     public int imgMark() {
         switch (this) {
@@ -36,7 +39,47 @@ public enum Direction {
             case LEFT_UP: {
                 return 8;
             }
-            default: return 0;
+            default: return 1;
+        }
+    }
+
+    public double moveX(double x){
+        switch (this) {
+            case UP_RIGHT:
+            case RIGHT_DOWN: {
+                return x + COCKROACH_SPEED /2;
+            }
+            case RIGHT: {
+                return x + COCKROACH_SPEED;
+            }
+            case DOWN_LEFT:
+            case LEFT_UP: {
+                return x - COCKROACH_SPEED /2;
+            }
+            case LEFT: {
+                return x - COCKROACH_SPEED;
+            }
+            default: return x;
+        }
+    }
+
+    public double moveY(double y){
+        switch (this) {
+            case UP: {
+                return  y - COCKROACH_SPEED;
+            }
+            case UP_RIGHT:
+            case LEFT_UP: {
+                return  y - (COCKROACH_SPEED / 2);
+            }
+            case RIGHT_DOWN:
+            case DOWN_LEFT: {
+                return y + COCKROACH_SPEED /2;
+            }
+            case DOWN: {
+                return y + COCKROACH_SPEED;
+            }
+            default: return y;
         }
     }
 }

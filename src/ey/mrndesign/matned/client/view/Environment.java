@@ -3,12 +3,12 @@ package ey.mrndesign.matned.client.view;
 public class Environment implements ViewEnvironment{
 
     private String image;
-    private int xPos;
-    private int yPos;
-    private int xSize;
-    private int ySize;
+    private double xPos;
+    private double yPos;
+    private double xSize;
+    private double ySize;
 
-    public Environment(String image, int xPos, int yPos, int xSize, int ySize) {
+    public Environment(String image, double xPos, double yPos, double xSize, double ySize) {
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -32,22 +32,27 @@ public class Environment implements ViewEnvironment{
     }
 
     @Override
-    public int getxPos() {
+    public String setImage(String image) {
+        return this.image = image;
+    }
+
+    @Override
+    public double getxPos() {
         return xPos;
     }
 
     @Override
-    public int getyPos() {
+    public double getyPos() {
         return yPos;
     }
 
     @Override
-    public int getxSize() {
+    public double getxSize() {
         return xSize;
     }
 
     @Override
-    public int getySize() {
+    public double getySize() {
         return ySize;
     }
 }

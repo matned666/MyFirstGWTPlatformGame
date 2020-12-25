@@ -2,10 +2,12 @@ package ey.mrndesign.matned.client.view;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.user.client.ui.Image;
 import ey.mrndesign.matned.client.contract.GameContract;
 import ey.mrndesign.matned.client.contract.MoveType;
 import ey.mrndesign.matned.client.contract.Direction;
+import ey.mrndesign.matned.client.model.MouseListener;
 import ey.mrndesign.matned.client.presenter.PlatformPresenter;
 import ey.mrndesign.matned.client.screen.CanvasScreen;
 import ey.mrndesign.matned.client.utils.Constants;
@@ -19,25 +21,28 @@ public class PlatformView implements GameContract.View {
     private Context2d context;
     private GameContract.Presenter presenter;
     private String backgroundImage;
-    private int heroPosX;
-    private int heroPosY;
+    private double heroPosX;
+    private double heroPosY;
+    private String heroImage;
+    private double mouseX;
+    private double mouseY;
     private MoveType currentAction;
     private Direction currentDirection;
     private List<ViewEnvironment> environment;
     private ViewEnvironment hero;
     private CanvasScreen screen;
 
-    public PlatformView(CanvasScreen screen, Context2d context) {
+    public PlatformView(CanvasScreen screen) {
         this.screen = screen;
-        this.context = context;
-        this.presenter = new PlatformPresenter();
+        this.context = screen.getCanva().getContext2d();
+        this.presenter = new PlatformPresenter(this);
         this.backgroundImage = Images.BACKGROUND_IMAGE;
         heroPosX = Constants.DEFAULT_HERO_START_POS_X;
         heroPosY = Constants.DEFAULT_HERO_START_POS_Y;
         environment = new LinkedList<>();
         currentAction = MoveType.STAND;
-        currentDirection = Direction.RIGHT;
-        hero = new Environment(HeroView.image(currentAction,currentDirection), heroPosX, heroPosY, Constants.HERO_WIDTH, Constants.HERO_HEIGHT);
+        currentDirection = Direction.UP;
+        hero = new Environment(heroImage , heroPosX, heroPosY, Constants.HERO_WIDTH, Constants.HERO_HEIGHT);
         environment.add(hero);
         addKeyListeners();
     }
@@ -48,16 +53,22 @@ public class PlatformView implements GameContract.View {
         for (ViewEnvironment el: environment){
             paintOnCanva(el.getImage(), el.getxPos(), el.getyPos(), el.getxSize(), el.getySize());
         }
+        context.strokeText("X: "+ MouseListener.getInstance().getMouseX(), 12, 20 +10);
+        context.strokeText("Y: "+ MouseListener.getInstance().getMouseY(), 12, 20 +20);
+        context.strokeText("Frame: "+ TimeWrapper.getInstance().getFrameNo(), 12, 20 +30);
+
     }
 
     @Override
     public void onStand(Direction side) {
-
+       hero.setImage(HeroView.image(MoveType.STAND,side));
     }
 
     @Override
     public void onMove(Direction side) {
-
+        heroImage = HeroView.image(MoveType.RUN,side);
+        heroPosX = side.moveX(heroPosX);
+        heroPosY = side.moveY(heroPosY);
     }
 
     @Override
@@ -86,21 +97,22 @@ public class PlatformView implements GameContract.View {
     }
 
     private void addKeyListeners(){
-        screen.getCanva().addKeyDownHandler(key ->{
-            if (key.isUpArrow()) presenter.action(MoveType.RUN, Direction.UP);
-            else if (key.isUpArrow() && key.isRightArrow()) presenter.action(MoveType.RUN, Direction.UP_RIGHT);
-            else if (key.isRightArrow()) presenter.action(MoveType.RUN, Direction.RIGHT);
-            else if (key.isRightArrow() && key.isDownArrow()) presenter.action(MoveType.RUN, Direction.RIGHT_DOWN);
-            else if (key.isDownArrow()) presenter.action(MoveType.RUN, Direction.DOWN);
-            else if (key.isDownArrow() && key.isLeftArrow()) presenter.action(MoveType.RUN, Direction.DOWN_LEFT);
-            else if (key.isLeftArrow()) presenter.action(MoveType.RUN, Direction.LEFT);
-            else if (key.isLeftArrow() && key.isUpArrow()) presenter.action(MoveType.RUN, Direction.LEFT_UP);
-        });
+        screen.getCanva().addMouseMoveHandler(this::mouseListen);
+        screen.getCanva().addMouseDownHandler(mouse -> presenter.action(MoveType.RUN, mouseX, mouseY));
      }
 
-    private void paintOnCanva(String image, int posx, int posy, int sizex, int sizey) {
+    private void mouseListen(MouseMoveEvent mouse) {
+        mouseX = mouse.getRelativeX(screen.getCanva().getElement());
+        mouseY = mouse.getRelativeY(screen.getCanva().getElement());
+        MouseListener.getInstance().setMouseX(mouseX);
+        MouseListener.getInstance().setMouseY(mouseY);
+        presenter.action(MoveType.STAND, mouseX, mouseY);
+    }
+
+    private void paintOnCanva(String image, double posx, double posy, double sizex, double sizey) {
         ImageElement img = ImageElement.as(new Image(Constants.IMG_FOLDER + image).getElement());
         context.drawImage(img, posx, posy, sizex, sizey);
     }
+
 
 }

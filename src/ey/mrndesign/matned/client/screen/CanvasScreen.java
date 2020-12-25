@@ -1,10 +1,10 @@
 package ey.mrndesign.matned.client.screen;
 
-import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.canvas.client.Canvas;
 
 public interface CanvasScreen {
 
     void run();
-    FocusWidget getCanva();
+    Canvas getCanva();
 
 }

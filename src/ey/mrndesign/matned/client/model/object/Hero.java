@@ -1,17 +1,24 @@
 package ey.mrndesign.matned.client.model.object;
 
-import static ey.mrndesign.matned.client.utils.Constants.DEFAULT_START_LIVES;
+import static ey.mrndesign.matned.client.utils.Constants.*;
 
 public class Hero implements Species{
 
+    private String image;
     private int lives;
-    private int positionX;
-    private int positionY;
-    private int sizeX;
-    private int sizeY;
+    private double positionX;
+    private double positionY;
+    private double sizeX;
+    private double sizeY;
+    private boolean madeStep;
 
     public Hero() {
         lives = DEFAULT_START_LIVES;
+        positionX = DEFAULT_HERO_START_POS_X;
+        positionY = DEFAULT_HERO_START_POS_Y;
+        sizeX = HERO_WIDTH;
+        sizeY = HERO_HEIGHT;
+        madeStep = false;
     }
 
     @Override
@@ -25,32 +32,38 @@ public class Hero implements Species{
     }
 
     @Override
-    public int getSizeX() {
+    public boolean makeStep() {
+        madeStep = !madeStep;
+        return madeStep;
+    }
+
+    @Override
+    public double getSizeX() {
         return sizeX;
     }
 
     @Override
-    public int getSizeY() {
+    public double getSizeY() {
         return sizeY;
     }
 
     @Override
-    public int getPositionX() {
+    public double getPositionX() {
         return positionX;
     }
 
     @Override
-    public int getPositionY() {
+    public double getPositionY() {
         return positionY;
     }
 
     @Override
-    public void setPositionX(int positionX) {
+    public void setPositionX(double positionX) {
         this.positionX = positionX;
     }
 
     @Override
-    public void setPositionY(int positionY) {
+    public void setPositionY(double positionY) {
         this.positionY = positionY;
     }
 }

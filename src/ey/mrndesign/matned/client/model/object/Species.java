@@ -4,5 +4,6 @@ public interface Species extends MovingObject{
 
     int getLives();
     void looseLife();
+    boolean makeStep();
 
 }
