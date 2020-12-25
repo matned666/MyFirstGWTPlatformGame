@@ -21,13 +21,16 @@ public class PlatformPresenter implements GameContract.Presenter {
     }
 
     @Override
-    public void action(MoveType action, double mouseX, double mouseY) {
+    public void action(MoveType action,double eX, double eY, double mouseX, double mouseY) {
         switch (action){
             case RUN:{
-                view.onMove(game.moveHeroTo(mouseX, mouseY));
+                view.onMove(game.moveHeroTo(eX, eY, mouseX, mouseY));
             }
             case STAND:{
-                view.onStand(game.turnTo(mouseX, mouseY));
+                view.onStand(game.turnTo(eX, eY, mouseX, mouseY));
+            }
+            case JUMP:{
+                view.onJump(game.moveHeroTo(eX, eY, mouseX, mouseY));
             }
         }
     }

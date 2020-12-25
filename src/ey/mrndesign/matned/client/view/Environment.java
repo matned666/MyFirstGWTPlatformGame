@@ -7,6 +7,7 @@ public class Environment implements ViewEnvironment{
     private double yPos;
     private double xSize;
     private double ySize;
+    private boolean step;
 
     public Environment(String image, double xPos, double yPos, double xSize, double ySize) {
         this.image = image;
@@ -14,15 +15,27 @@ public class Environment implements ViewEnvironment{
         this.yPos = yPos;
         this.xSize = xSize;
         this.ySize = ySize;
+        step = false;
     }
 
     @Override
-    public void setxPos(int xPos) {
+    public String getPrefix() {
+        if (step) return "s";
+        else return "r";
+    }
+
+    @Override
+    public void setStep() {
+        step = !step;
+    }
+
+    @Override
+    public void setxPos(double xPos) {
         this.xPos = xPos;
     }
 
     @Override
-    public void setyPos(int yPos) {
+    public void setyPos(double yPos) {
         this.yPos = yPos;
     }
 
@@ -55,4 +68,5 @@ public class Environment implements ViewEnvironment{
     public double getySize() {
         return ySize;
     }
+
 }

@@ -25,7 +25,7 @@ public class GameContract {
 
     public interface Presenter {
 
-        void action(MoveType action, double x, double y);
+        void action(MoveType action, double ex, double ey, double mx, double my);
 
         void looseLife(Species object);
 

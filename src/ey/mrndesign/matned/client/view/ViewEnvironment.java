@@ -2,8 +2,10 @@ package ey.mrndesign.matned.client.view;
 
 public interface ViewEnvironment {
 
-    void setxPos(int xPos);
-    void setyPos(int yPos);
+    String getPrefix();
+    void setStep();
+    void setxPos(double xPos);
+    void setyPos(double yPos);
     String getImage();
     String setImage(String image);
     double getxPos();

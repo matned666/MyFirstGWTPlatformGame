@@ -5,13 +5,11 @@ import ey.mrndesign.matned.client.contract.Direction;
 
 public class HeroView {
 
-    public static String image(MoveType action, Direction direction) {
+    public static String image(MoveType action, Direction direction, String prefix) {
         switch (action) {
-            case STAND: {
-                return "h-r-stand" + direction.imgMark() + ".png";
-            }
+            case STAND:
             case RUN: {
-                return "h-r-jump1.png";
+                return "h-"+prefix+"-stand" + direction.imgMark() + ".png";
             }
             case SHOOT: {
                 return "h-r-shoot1.png";

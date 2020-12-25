@@ -4,38 +4,26 @@ import ey.mrndesign.matned.client.contract.Direction;
 import ey.mrndesign.matned.client.model.object.Hero;
 import ey.mrndesign.matned.client.model.object.Species;
 
-import static ey.mrndesign.matned.client.utils.Constants.DEFAULT_HERO_START_POS_X;
-import static ey.mrndesign.matned.client.utils.Constants.DEFAULT_HERO_START_POS_Y;
-
 public class GameCore implements Game {
 
     private Species hero;
-    private double heroX;
-    private double heroY;
-    private double heroNewX;
-    private double heroNewY;
     private double angle;
 
     public GameCore() {
         hero = new Hero();
-        heroX = DEFAULT_HERO_START_POS_X;
-        heroY = DEFAULT_HERO_START_POS_Y;
-        heroNewX = heroX;
-        heroNewY = heroY;
         angle = 0;
     }
 
-
     @Override
-    public Direction moveHeroTo(double mouseX, double mouseY) {
-        Direction side = getDirection(heroX, heroY, mouseX, mouseY);
-        hero.setPositionX(heroNewX);
-        hero.setPositionY(heroNewY);
+    public Direction moveHeroTo(double environmentX, double environmentY, double mouseX, double mouseY) {
+        Direction side = getDirection(environmentX, environmentY, mouseX, mouseY);
+        hero.setPositionX(environmentX);
+        hero.setPositionY(environmentY);
         return side;
     }
 
     @Override
-    public Direction turnTo(double mouseX, double mouseY) {
+    public Direction turnTo(double heroX, double heroY, double mouseX, double mouseY) {
         heroX = hero.getPositionX();
         heroY = hero.getPositionY();
         return getDirection(heroX, heroY, mouseX, mouseY);
