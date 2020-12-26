@@ -15,7 +15,7 @@ public class ScreenManager implements ScreenManagerInterface {
 
     @Override
     public void start() {
-        screenType = ScreenType.GAME;
+        screenType = ScreenType.MENU;
         initializeScreen();
     }
 
@@ -23,11 +23,11 @@ public class ScreenManager implements ScreenManagerInterface {
     public void initializeScreen() {
         switch (screenType){
             case GAME:{
-                screen = new GameScreen(canvas);
+                screen = new GameScreen(this, canvas);
                 break;
             }
             case MENU:{
-                screen = new MenuScreen(canvas);
+                screen = new MenuScreen(this, canvas);
                 break;
             }
         }
@@ -37,6 +37,12 @@ public class ScreenManager implements ScreenManagerInterface {
     @Override
     public void currentSituation() {
                 screen.currentSituation();
+    }
+
+    @Override
+    public void setView(ScreenType screen) {
+        this.screenType = screen;
+        initializeScreen();
     }
 
 

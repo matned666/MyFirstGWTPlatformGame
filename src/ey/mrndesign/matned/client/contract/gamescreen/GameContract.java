@@ -10,11 +10,12 @@ public class GameContract {
 
         void onMove(Direction side);
 
+        void onDeath();
     }
 
     public interface Presenter {
 
-        void action(MoveType action, double ex, double ey, double mx, double my);
+        void action(MoveType action, double ex, double ey);
 
     }
 

@@ -9,8 +9,12 @@ public class HeroView {
         switch (action) {
             case STAND:
             case RUN: {
-                return "h-"+prefix+"-stand" + direction.imgMark() + ".png";
-            } default: {
+                return "h-" + prefix + "-stand" + direction.imgMark() + ".png";
+            }
+            case DEAD: {
+                return "dead" + direction.imgMark() + ".png";
+            }
+            default: {
                 return "h-r-stand1.png";
             }
         }

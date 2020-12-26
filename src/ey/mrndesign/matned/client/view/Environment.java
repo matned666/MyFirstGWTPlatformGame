@@ -1,4 +1,6 @@
-package ey.mrndesign.matned.client.view.gamescreen;
+package ey.mrndesign.matned.client.view;
+
+import ey.mrndesign.matned.client.model.MouseListener;
 
 public class Environment implements ViewEnvironment{
 
@@ -16,6 +18,13 @@ public class Environment implements ViewEnvironment{
         this.xSize = xSize;
         this.ySize = ySize;
         step = false;
+    }
+
+    @Override
+    public boolean isMouseOn() {
+        double mouseX = MouseListener.getInstance().getMouseX();
+        double mouseY = MouseListener.getInstance().getMouseY();
+        return mouseX >= xPos && mouseX <= xPos+xSize && mouseY >= yPos && mouseY <= yPos+ySize;
     }
 
     @Override

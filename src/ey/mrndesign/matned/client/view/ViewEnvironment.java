@@ -1,7 +1,8 @@
-package ey.mrndesign.matned.client.view.gamescreen;
+package ey.mrndesign.matned.client.view;
 
 public interface ViewEnvironment {
 
+    boolean isMouseOn();
     String getPrefix();
     void setStep();
     void setxPos(double xPos);

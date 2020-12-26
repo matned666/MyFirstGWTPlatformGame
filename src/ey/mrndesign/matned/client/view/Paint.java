@@ -5,7 +5,6 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 import ey.mrndesign.matned.client.model.MouseListener;
 import ey.mrndesign.matned.client.utils.Constants;
-import ey.mrndesign.matned.client.view.gamescreen.ViewEnvironment;
 
 import java.util.List;
 

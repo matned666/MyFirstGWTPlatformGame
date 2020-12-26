@@ -18,4 +18,13 @@ public class Constants {
     public static final int DEFAULT_START_LIVES = 4;
 
     public static final String IMG_FOLDER = "img/";
+
+
+    public static final double MENU_BUTTON_WIDTH = 490;
+    public static final double MENU_BUTTON_HEIGHT = 100;
+
+    public static final double MENU_START_GAME_BUTTON_X = 255;
+    public static final double MENU_START_GAME_BUTTON_Y = 100;
+
+
 }

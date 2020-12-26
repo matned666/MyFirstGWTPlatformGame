@@ -2,6 +2,7 @@ package ey.mrndesign.matned.client.view.gamescreen;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.event.dom.client.*;
+import com.google.gwt.event.shared.HandlerRegistration;
 import ey.mrndesign.matned.client.contract.gamescreen.GameContract;
 import ey.mrndesign.matned.client.contract.gamescreen.MoveType;
 import ey.mrndesign.matned.client.contract.gamescreen.Direction;
@@ -10,13 +11,14 @@ import ey.mrndesign.matned.client.presenter.PlatformPresenter;
 import ey.mrndesign.matned.client.screen.CanvasScreen;
 import ey.mrndesign.matned.client.utils.Constants;
 import ey.mrndesign.matned.client.utils.Images;
+import ey.mrndesign.matned.client.view.Environment;
 import ey.mrndesign.matned.client.view.Paint;
+import ey.mrndesign.matned.client.view.ViewEnvironment;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static ey.mrndesign.matned.client.utils.Constants.DEFAULT_HERO_START_POS_X;
-import static ey.mrndesign.matned.client.utils.Constants.DEFAULT_HERO_START_POS_Y;
+import static ey.mrndesign.matned.client.utils.Constants.*;
 import static ey.mrndesign.matned.client.utils.Images.START_HERO_IMAGE;
 import static ey.mrndesign.matned.client.view.Paint.standardView;
 
@@ -26,11 +28,12 @@ public class PlatformView implements GameContract.View {
     private Context2d context;
     private GameContract.Presenter presenter;
     private String backgroundImage;
-    private double mouseX;
-    private double mouseY;
     private List<ViewEnvironment> environment;
     private ViewEnvironment hero;
     boolean mouseDown;
+    private Direction currentDirection;
+    private boolean isDead;
+
 
     public PlatformView(CanvasScreen screen) {
         this.screen = screen;
@@ -41,6 +44,7 @@ public class PlatformView implements GameContract.View {
         hero = new Environment(START_HERO_IMAGE, DEFAULT_HERO_START_POS_X, DEFAULT_HERO_START_POS_Y, Constants.HERO_WIDTH, Constants.HERO_HEIGHT);
         environment.add(hero);
         mouseDown = false;
+        isDead = false;
         addKeyListeners();
     }
 
@@ -55,6 +59,7 @@ public class PlatformView implements GameContract.View {
     @Override
     public void onStand(Direction side) {
         hero.setImage(HeroView.image(MoveType.STAND, side, hero.getPrefix()));
+        currentDirection = side;
     }
 
     @Override
@@ -64,24 +69,39 @@ public class PlatformView implements GameContract.View {
             hero.setxPos(side.moveX(hero.getxPos()));
             hero.setyPos(side.moveY(hero.getyPos()));
         }
-        hero.setStep();    }
+        hero.setStep();
+    }
+
+    @Override
+    public void onDeath() {
+        hero.setImage(HeroView.image(MoveType.DEAD, currentDirection, hero.getPrefix()));
+    }
 
     private void addKeyListeners() {
-        screen.getCanva().addMouseMoveHandler(this::mouseListen);
-        screen.getCanva().addMouseDownHandler(mouse -> mouseDown = true);
-        screen.getCanva().addMouseUpHandler(mouse -> mouseDown = false);
+        List<HandlerRegistration> handlers = new LinkedList<>();
+        handlers.add(screen.getCanva().addMouseMoveHandler(this::mouseListen));
+        handlers.add(screen.getCanva().addClickHandler(this::mouseClick));
+        handlers.add(screen.getCanva().addMouseDownHandler(mouse -> mouseDown = true));
+        handlers.add(screen.getCanva().addMouseUpHandler(mouse -> mouseDown = false));
+    }
+
+    private void mouseClick(ClickEvent clickEvent) {
+        if (hero.isMouseOn()){
+            isDead = true;
+            presenter.action(MoveType.DEAD, hero.getxPos(), hero.getyPos());
+        }
     }
 
     private void onMouseDown() {
-        presenter.action(MoveType.RUN, hero.getxPos(), hero.getyPos(), mouseX, mouseY);
+        if (!isDead) presenter.action(MoveType.RUN, hero.getxPos(), hero.getyPos());
     }
 
     private void mouseListen(MouseMoveEvent mouse) {
-        mouseX = mouse.getRelativeX(screen.getCanva().getElement());
-        mouseY = mouse.getRelativeY(screen.getCanva().getElement());
+        double mouseX = mouse.getRelativeX(screen.getCanva().getElement());
+        double mouseY = mouse.getRelativeY(screen.getCanva().getElement());
         MouseListener.getInstance().setMouseX(mouseX);
         MouseListener.getInstance().setMouseY(mouseY);
-        presenter.action(MoveType.STAND, hero.getxPos(), hero.getyPos(), mouseX, mouseY);
+        if (!isDead) presenter.action(MoveType.STAND, hero.getxPos(), hero.getyPos());
     }
 
 

@@ -4,7 +4,6 @@ import static ey.mrndesign.matned.client.utils.Constants.*;
 
 public class Hero implements Species{
 
-    private String image;
     private int lives;
     private double positionX;
     private double positionY;
