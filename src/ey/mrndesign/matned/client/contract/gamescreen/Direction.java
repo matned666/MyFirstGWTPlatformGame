@@ -1,4 +1,4 @@
-package ey.mrndesign.matned.client.contract;
+package ey.mrndesign.matned.client.contract.gamescreen;
 
 import static ey.mrndesign.matned.client.utils.Constants.COCKROACH_SPEED;
 

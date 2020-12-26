@@ -2,9 +2,7 @@ package ey.mrndesign.matned.client.screen;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.user.client.ui.*;
-import ey.mrndesign.matned.client.contract.GameContract;
 import ey.mrndesign.matned.client.utils.Text;
-import ey.mrndesign.matned.client.view.PlatformView;
 import ey.mrndesign.matned.client.view.TimeWrapper;
 
 import static ey.mrndesign.matned.client.utils.Constants.CANVAS_HEIGHT;
@@ -12,20 +10,20 @@ import static ey.mrndesign.matned.client.utils.Constants.CANVAS_WIDTH;
 
 public class CanvasWidget extends Composite implements CanvasScreen{
 
-    private GameContract.View view;
     private Canvas canvas;
+    ScreenManager screenManager;
 
     public CanvasWidget() {
         createCanvas();
         canvas = createCanvas();
-        view = new PlatformView(this);
-        TimeWrapper.getInstance();
+        screenManager = new ScreenManager(this);
+        screenManager.start();
         initWidget(canvas);
     }
 
     @Override
     public void run() {
-        view.currentSituation();
+        screenManager.currentSituation();
         TimeWrapper.getInstance().nextFrame();
     }
 

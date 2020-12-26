@@ -1,4 +1,4 @@
-package ey.mrndesign.matned.client.view;
+package ey.mrndesign.matned.client.view.gamescreen;
 
 public class Environment implements ViewEnvironment{
 

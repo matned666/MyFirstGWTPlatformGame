@@ -1,6 +1,6 @@
 package ey.mrndesign.matned.client.model;
 
-import ey.mrndesign.matned.client.contract.Direction;
+import ey.mrndesign.matned.client.contract.gamescreen.Direction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,20 +13,20 @@ class GameCoreTest {
 
     @Test
     void degreeTestUp(){
-        ey.mrndesign.matned.client.model.GameCore core = new ey.mrndesign.matned.client.model.GameCore();
+        GameCore core = new GameCore();
         assertEquals(Direction.UP, core.turnTo(900, 50));
     }
 
     @Test
     void degreeTestLeft(){
-        ey.mrndesign.matned.client.model.GameCore core = new ey.mrndesign.matned.client.model.GameCore();
+        GameCore core = new GameCore();
         assertEquals(Direction.RIGHT, core.turnTo(1000, 100));
     }
 
 
     @Test
     void degreeTestUp2(){
-        ey.mrndesign.matned.client.model.GameCore core = new ey.mrndesign.matned.client.model.GameCore();
+        GameCore core = new GameCore();
         assertEquals(Direction.UP, core.turnTo(921, 38));
     }
 

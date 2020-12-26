@@ -1,6 +1,6 @@
 package ey.mrndesign.matned.client.model;
 
-import ey.mrndesign.matned.client.contract.Direction;
+import ey.mrndesign.matned.client.contract.gamescreen.Direction;
 import ey.mrndesign.matned.client.model.object.Hero;
 import ey.mrndesign.matned.client.model.object.Species;
 

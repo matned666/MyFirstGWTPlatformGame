@@ -2,6 +2,8 @@ package ey.mrndesign.matned.client.view;
 
 import com.google.gwt.user.client.Timer;
 
+import static ey.mrndesign.matned.client.utils.Constants.PERIOD_MILLIS;
+
 /**
  * Prosty singleton kolekcjonujący dane dla całego programu.
  * Dzięki temu mam do nich bezpośredni dostęp z każdej klasy.
@@ -23,6 +25,7 @@ public class TimeWrapper {
     }
 
     private long frameNo;
+    private Timer timer;
 
     private TimeWrapper() {
         if (instance != null) {
@@ -31,6 +34,17 @@ public class TimeWrapper {
         resetFrame();
     }
 
+    public void run(){
+        timer.scheduleRepeating(PERIOD_MILLIS);
+    }
+
+    public void stop(){
+        timer.cancel();
+    }
+
+    public void initTimer(Timer timer){
+        this.timer = timer;
+    }
 
     public void resetFrame(){
         frameNo = 0;

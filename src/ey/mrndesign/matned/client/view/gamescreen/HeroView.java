@@ -1,7 +1,7 @@
-package ey.mrndesign.matned.client.view;
+package ey.mrndesign.matned.client.view.gamescreen;
 
-import ey.mrndesign.matned.client.contract.MoveType;
-import ey.mrndesign.matned.client.contract.Direction;
+import ey.mrndesign.matned.client.contract.gamescreen.MoveType;
+import ey.mrndesign.matned.client.contract.gamescreen.Direction;
 
 public class HeroView {
 
@@ -10,11 +10,7 @@ public class HeroView {
             case STAND:
             case RUN: {
                 return "h-"+prefix+"-stand" + direction.imgMark() + ".png";
-            }
-            case SHOOT: {
-                return "h-r-shoot1.png";
-            }
-            default: {
+            } default: {
                 return "h-r-stand1.png";
             }
         }
