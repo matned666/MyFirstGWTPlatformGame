@@ -9,10 +9,14 @@ import ey.mrndesign.matned.client.contract.gamescreen.Direction;
 import ey.mrndesign.matned.client.model.MouseListener;
 import ey.mrndesign.matned.client.presenter.PlatformPresenter;
 import ey.mrndesign.matned.client.screen.CanvasScreen;
+import ey.mrndesign.matned.client.screen.ScreenManagerInterface;
+import ey.mrndesign.matned.client.screen.ScreenType;
 import ey.mrndesign.matned.client.utils.Constants;
+import ey.mrndesign.matned.client.utils.GameAudio;
 import ey.mrndesign.matned.client.utils.Images;
 import ey.mrndesign.matned.client.view.Environment;
 import ey.mrndesign.matned.client.view.Paint;
+import ey.mrndesign.matned.client.view.TimeWrapper;
 import ey.mrndesign.matned.client.view.ViewEnvironment;
 
 import java.util.LinkedList;
@@ -24,6 +28,7 @@ import static ey.mrndesign.matned.client.view.Paint.standardView;
 
 public class PlatformView implements GameContract.View {
 
+    private ScreenManagerInterface listener;
     private CanvasScreen screen;
     private Context2d context;
     private GameContract.Presenter presenter;
@@ -35,7 +40,8 @@ public class PlatformView implements GameContract.View {
     private boolean isDead;
 
 
-    public PlatformView(CanvasScreen screen) {
+    public PlatformView(ScreenManagerInterface listener, CanvasScreen screen) {
+        this.listener = listener;
         this.screen = screen;
         this.context = screen.getCanva().getContext2d();
         this.presenter = new PlatformPresenter(this);
@@ -69,12 +75,14 @@ public class PlatformView implements GameContract.View {
             hero.setxPos(side.moveX(hero.getxPos()));
             hero.setyPos(side.moveY(hero.getyPos()));
         }
+        if (TimeWrapper.getInstance().getFrameNo()% 5 == 0) GameAudio.stepSound();
         hero.setStep();
     }
 
     @Override
     public void onDeath() {
         hero.setImage(HeroView.image(MoveType.DEAD, currentDirection, hero.getPrefix()));
+        GameAudio.deathSound();
     }
 
     private void addKeyListeners() {
@@ -90,6 +98,11 @@ public class PlatformView implements GameContract.View {
             isDead = true;
             presenter.action(MoveType.DEAD, hero.getxPos(), hero.getyPos());
         }
+        if (isDead && !hero.isMouseOn()) {
+            listener.setView(ScreenType.MENU);
+            isDead = false;
+        }
+
     }
 
     private void onMouseDown() {

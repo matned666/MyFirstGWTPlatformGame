@@ -11,7 +11,7 @@ public class GameScreen implements ScreenInterface {
     private GameContract.View view;
 
     public GameScreen(ScreenManagerInterface listener, CanvasScreen canvas) {
-        view = new PlatformView(canvas);
+        view = new PlatformView(listener, canvas);
     }
 
     @Override

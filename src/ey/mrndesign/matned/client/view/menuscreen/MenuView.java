@@ -13,6 +13,7 @@ import ey.mrndesign.matned.client.screen.ScreenManagerInterface;
 import ey.mrndesign.matned.client.screen.ScreenType;
 import ey.mrndesign.matned.client.screen.scr.MenuScreen;
 import ey.mrndesign.matned.client.utils.Constants;
+import ey.mrndesign.matned.client.utils.GameAudio;
 import ey.mrndesign.matned.client.utils.Images;
 import ey.mrndesign.matned.client.view.Environment;
 import ey.mrndesign.matned.client.view.Paint;
@@ -86,6 +87,7 @@ public class MenuView implements MenuContract.View {
         }));
         handlers.add(screen.getCanva().addClickHandler(click -> {
             if (startGameButton.isMouseOn()){
+                GameAudio.menuClickSound();
                 startGameButton.setImage(START_GAME_BUTTON_CLICK);
                 handlers.forEach(HandlerRegistration::removeHandler);
                 presenter.onClick(MenuAction.START_GAME);
