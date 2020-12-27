@@ -28,18 +28,21 @@ import static ey.mrndesign.matned.client.view.Paint.standardView;
 
 public class PlatformView implements GameContract.View {
 
+    //    variables
     private ScreenManagerInterface listener;
     private CanvasScreen screen;
     private Context2d context;
     private GameContract.Presenter presenter;
     private String backgroundImage;
     private List<ViewEnvironment> environment;
+    private List<HandlerRegistration> handlers;
     private ViewEnvironment hero;
     private boolean mouseDown;
     private Direction currentDirection;
     private boolean isDead;
     private int points;
     private int timeLeft;
+    private int randomCrumbPutTime;
 
     public PlatformView(ScreenManagerInterface listener, CanvasScreen screen) {
         this.listener = listener;
@@ -57,6 +60,7 @@ public class PlatformView implements GameContract.View {
         addKeyListeners();
     }
 
+    //    method refreshed each frame
     @Override
     public void currentSituation() {
         Paint.onCanva(context, backgroundImage, 0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
@@ -64,9 +68,10 @@ public class PlatformView implements GameContract.View {
         standardView(environment, context);
         context.strokeText("Points: " + points, 12, 20 + 40);
         context.strokeText("Time left: " + timeLeft, 12, 20 + 50);
+        randomCrumbPutTime = (int) (Math.random() * 200 + 50);
         checkIfGotCrumbs();
         putCrumb();
-        if(TimeWrapper.getInstance().getFrameNo() % 3 == 0)
+        if (TimeWrapper.getInstance().getFrameNo() % 3 == 0)
             timeLeft -= 1;
         if (timeLeft == 0) {
             isDead = true;
@@ -74,12 +79,14 @@ public class PlatformView implements GameContract.View {
         }
     }
 
+    //    setting image on mouse move - on from presenter
     @Override
     public void onStand(Direction side) {
         hero.setImage(HeroView.image(MoveType.STAND, side, hero.getPrefix()));
         currentDirection = side;
     }
 
+    //    moving - on from presenter
     @Override
     public void onMove(Direction side) {
         hero.setImage(HeroView.image(MoveType.STAND, side, hero.getPrefix()));
@@ -87,21 +94,23 @@ public class PlatformView implements GameContract.View {
             hero.setxPos(side.moveX(hero.getxPos()));
             hero.setyPos(side.moveY(hero.getyPos()));
         }
-        if (TimeWrapper.getInstance().getFrameNo()% 5 == 0) GameAudio.stepSound();
+        if (TimeWrapper.getInstance().getFrameNo() % 5 == 0) GameAudio.stepSound();
         hero.setStep();
     }
-
+//    Death
     @Override
     public void onDeath() {
         hero.setImage(HeroView.image(MoveType.DEAD, currentDirection, hero.getPrefix()));
         GameAudio.deathSound();
     }
 
+//    putting crumb
     @Override
     public void onCrumbPut(String image, double xPos, double yPos, double size) {
         environment.add(new Environment(image, xPos, yPos, size, size));
     }
 
+//    eat simple crumb
     @Override
     public void onCrumbEaten(ViewEnvironment env, int points, int additionalTime) {
         this.points = points;
@@ -110,6 +119,7 @@ public class PlatformView implements GameContract.View {
         GameAudio.eatSound();
     }
 
+//    eats poisoned crumb
     @Override
     public void onPoisonedCrumbEaten(ViewEnvironment env, int additionalTime) {
         this.environment.remove(env);
@@ -118,7 +128,7 @@ public class PlatformView implements GameContract.View {
     }
 
     private void addKeyListeners() {
-        List<HandlerRegistration> handlers = new LinkedList<>();
+        handlers = new LinkedList<>();
         handlers.add(screen.getCanva().addMouseMoveHandler(this::mouseListen));
         handlers.add(screen.getCanva().addClickHandler(this::mouseClick));
         handlers.add(screen.getCanva().addMouseDownHandler(mouse -> mouseDown = true));
@@ -126,7 +136,7 @@ public class PlatformView implements GameContract.View {
     }
 
     private void mouseClick(ClickEvent clickEvent) {
-        if (hero.isMouseOn()){
+        if (hero.isMouseOn()) {
             isDead = true;
             presenter.action(MoveType.DEAD, hero.getxPos(), hero.getyPos());
         }
@@ -137,10 +147,13 @@ public class PlatformView implements GameContract.View {
 
     }
 
+
     private void onMouseDown() {
         if (!isDead) presenter.action(MoveType.RUN, hero.getxPos(), hero.getyPos());
     }
 
+
+//    checks a position of mouse
     private void mouseListen(MouseMoveEvent mouse) {
         double mouseX = mouse.getRelativeX(screen.getCanva().getElement());
         double mouseY = mouse.getRelativeY(screen.getCanva().getElement());
@@ -150,9 +163,10 @@ public class PlatformView implements GameContract.View {
     }
 
 
+//    check if hero touches any of the lying crumbs
     private void checkIfGotCrumbs() {
         for (int i = 1; i < environment.size(); i++) {
-            if (hero.collisionWith(environment.get(i))){
+            if (hero.collisionWith(environment.get(i))) {
                 presenter.eatCrumb(environment.get(i));
                 return;
             }
@@ -160,8 +174,9 @@ public class PlatformView implements GameContract.View {
         }
     }
 
+//    putting crumb on the screen
     private void putCrumb() {
-        if(TimeWrapper.getInstance().getFrameNo() % 200 == 0 || TimeWrapper.getInstance().getFrameNo() == 10){
+        if (TimeWrapper.getInstance().getFrameNo() % randomCrumbPutTime == 0 || TimeWrapper.getInstance().getFrameNo() == 10) {
             presenter.action(MoveType.PUT_NEW_CRUMB);
         }
     }

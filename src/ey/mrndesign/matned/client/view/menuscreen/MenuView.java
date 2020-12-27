@@ -8,10 +8,8 @@ import ey.mrndesign.matned.client.contract.menuscreen.MenuContract;
 import ey.mrndesign.matned.client.model.MouseListener;
 import ey.mrndesign.matned.client.presenter.MenuPresenter;
 import ey.mrndesign.matned.client.screen.CanvasScreen;
-import ey.mrndesign.matned.client.screen.ScreenInterface;
 import ey.mrndesign.matned.client.screen.ScreenManagerInterface;
 import ey.mrndesign.matned.client.screen.ScreenType;
-import ey.mrndesign.matned.client.screen.scr.MenuScreen;
 import ey.mrndesign.matned.client.utils.Constants;
 import ey.mrndesign.matned.client.utils.GameAudio;
 import ey.mrndesign.matned.client.utils.Images;
@@ -19,7 +17,6 @@ import ey.mrndesign.matned.client.view.Environment;
 import ey.mrndesign.matned.client.view.Paint;
 import ey.mrndesign.matned.client.view.ViewEnvironment;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +33,6 @@ public class MenuView implements MenuContract.View {
     private String backgroundImage;
     private List<ViewEnvironment> environment;
     private ViewEnvironment startGameButton;
-    private String startGameButtonImage;
     private List<HandlerRegistration> handlers;
 
 
@@ -46,6 +42,7 @@ public class MenuView implements MenuContract.View {
         init();
     }
 
+//    inits menu view
     private void init() {
         this.context = screen.getCanva().getContext2d();
         this.presenter = new MenuPresenter(this);
@@ -56,17 +53,18 @@ public class MenuView implements MenuContract.View {
     }
 
     private void menuButtons() {
-        startGameButtonImage = START_GAME_BUTTON;
-        startGameButton = new Environment(startGameButtonImage,MENU_START_GAME_BUTTON_X, MENU_START_GAME_BUTTON_Y, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+        startGameButton = new Environment(START_GAME_BUTTON,MENU_START_GAME_BUTTON_X, MENU_START_GAME_BUTTON_Y, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
         environment.add(startGameButton);
     }
 
+//    current situation on canvas - this method is refreshed each frame
     @Override
     public void currentSituation() {
         Paint.onCanva(context, backgroundImage, 0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
         standardView(environment, context);
     }
 
+//    pushing start button
     @Override
     public void onStartGame() {
         listener.setView(ScreenType.GAME);

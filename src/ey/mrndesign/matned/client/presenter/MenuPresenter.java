@@ -13,8 +13,8 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void onClick(MenuAction action) {
-        switch (action){
-            case START_GAME: view.onStartGame();
+        if (action == MenuAction.START_GAME) {
+            view.onStartGame();
         }
     }
 }

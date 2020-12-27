@@ -5,9 +5,9 @@ import ey.mrndesign.matned.client.model.object.Crumb;
 
 public interface Game {
 
-    int getTimeLeft();
-
-    void addTime(int additionalTime);
+//    int getTimeLeft();
+//
+//    void addTime(int additionalTime);
 
     int getPoints();
 

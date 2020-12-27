@@ -6,6 +6,8 @@ import static ey.mrndesign.matned.client.utils.Sounds.*;
 
 public class GameAudio {
 
+//    This class creates sound from an audio file
+
     public static void stepSound(){
         sound(STEP_SOUND);
     }

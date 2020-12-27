@@ -4,6 +4,5 @@ public enum MoveType {
     DEAD,
     STAND,
     RUN,
-    EAT,
     PUT_NEW_CRUMB
 }

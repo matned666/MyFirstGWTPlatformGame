@@ -24,6 +24,7 @@ public class Environment implements ViewEnvironment{
         step = false;
     }
 
+//    checks if there is a mouse on the environment object
     @Override
     public boolean isMouseOn() {
         double mouseX = MouseListener.getInstance().getMouseX();
@@ -31,6 +32,7 @@ public class Environment implements ViewEnvironment{
         return mouseX >= xPos && mouseX <= xPos+xSize && mouseY >= yPos && mouseY <= yPos+ySize;
     }
 
+//    checks if his object collides with another object
     @Override
     public boolean collisionWith(ViewEnvironment environment) {
         double eXPos = environment.getxPos();
@@ -40,6 +42,7 @@ public class Environment implements ViewEnvironment{
         return (xPos+xSize-frame >= eXPos) && (yPos+ySize-frame >= eYPos) && (xPos+frame <= eXPos+eXSize) && (yPos+frame <= eYPos+eYSize);
     }
 
+//    gets image prefix (actually suffix ,.. i don't know :) )
     @Override
     public String getPrefix() {
         if (step) return "s";
@@ -67,8 +70,8 @@ public class Environment implements ViewEnvironment{
     }
 
     @Override
-    public String setImage(String image) {
-        return this.image = image;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

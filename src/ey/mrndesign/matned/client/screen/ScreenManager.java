@@ -13,12 +13,14 @@ public class ScreenManager implements ScreenManagerInterface {
         this.canvas = canvas;
     }
 
+//    on start game we have menu
     @Override
     public void start() {
         screenType = ScreenType.MENU;
         initializeScreen();
     }
 
+//    initializes a screen according to a screen type
     @Override
     public void initializeScreen() {
         switch (screenType){
@@ -34,11 +36,13 @@ public class ScreenManager implements ScreenManagerInterface {
     }
 
 
+//    this methos is refreshed each frame
     @Override
     public void currentSituation() {
                 screen.currentSituation();
     }
 
+//    sets screenType to be changed in initializeScreen() method
     @Override
     public void setView(ScreenType screen) {
         this.screenType = screen;

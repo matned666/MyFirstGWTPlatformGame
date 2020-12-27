@@ -2,6 +2,8 @@ package ey.mrndesign.matned.client.utils;
 
 public class Constants {
 
+//    constants - here you can change game mechanics
+
     public static final int PERIOD_MILLIS = 30;  // refresh rate
 
     //    canva
@@ -28,7 +30,7 @@ public class Constants {
     public static final double MENU_START_GAME_BUTTON_X = 255;
     public static final double MENU_START_GAME_BUTTON_Y = 100;
 
-    public static final double ENVIRONMENT_FRAME = 2;
+    public static final double ENVIRONMENT_FRAME = -5;
 
     public static final double SMALL_CRUMB_SIZE = 10;
     public static final double MEDIUM_CRUMB_SIZE = 25;

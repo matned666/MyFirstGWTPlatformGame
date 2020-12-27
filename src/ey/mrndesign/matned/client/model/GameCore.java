@@ -10,22 +10,11 @@ public class GameCore implements Game {
     private int points;
     private Species hero;
     private double angle;
-    private int timeLeft;
 
     public GameCore() {
         hero = new Hero();
         angle = 0;
         points = 0;
-    }
-
-    @Override
-    public int getTimeLeft() {
-        return timeLeft;
-    }
-
-    @Override
-    public void addTime(int additionalTime) {
-        this.timeLeft += additionalTime;
     }
 
     @Override
@@ -46,6 +35,7 @@ public class GameCore implements Game {
         return side;
     }
 
+//    turns hero
     @Override
     public Direction turnTo(double heroX, double heroY, double mouseX, double mouseY) {
         heroX = hero.getPositionX();
@@ -53,7 +43,10 @@ public class GameCore implements Game {
         return getDirection(heroX, heroY, mouseX, mouseY);
     }
 
-
+    /**
+    *  Gets direction according to mouse position to hero position
+     *  It calculates an angle of line
+    */
     private Direction getDirection(double heroX, double heroY, double mouseX, double mouseY) {
         angle = angle(heroX, heroY, mouseX, mouseY);
         if (setUpR(heroX, heroY, mouseX, mouseY)) return Direction.UP_RIGHT;

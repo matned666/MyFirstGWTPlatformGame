@@ -26,7 +26,6 @@ public class GameContract {
         void action(MoveType action);
         void action(MoveType action, double ex, double ey);
         void eatCrumb(ViewEnvironment environment);
-        int timeLeft(int addTime);
     }
 
 }

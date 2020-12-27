@@ -4,9 +4,8 @@ import com.google.gwt.user.client.Timer;
 
 import static ey.mrndesign.matned.client.utils.Constants.PERIOD_MILLIS;
 
-/**
- * Prosty singleton kolekcjonujący dane dla całego programu.
- * Dzięki temu mam do nich bezpośredni dostęp z każdej klasy.
+/*
+ * A singleton to hold data connected with runTime on canvas
  */
 
 public class TimeWrapper {

@@ -5,6 +5,7 @@ import ey.mrndesign.matned.client.contract.gamescreen.Direction;
 
 public class HeroView {
 
+//    changes hero image according to the direction and action
     public static String image(MoveType action, Direction direction, String prefix) {
         switch (action) {
             case STAND:

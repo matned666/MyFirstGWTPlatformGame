@@ -21,6 +21,7 @@ public class CanvasWidget extends Composite implements CanvasScreen{
         initWidget(canvas);
     }
 
+//    this frame is refreshed each frame
     @Override
     public void run() {
         screenManager.currentSituation();
@@ -33,6 +34,7 @@ public class CanvasWidget extends Composite implements CanvasScreen{
     }
 
 
+//    creates main canvas
     private Canvas createCanvas() {
         canvas = Canvas.createIfSupported();
 

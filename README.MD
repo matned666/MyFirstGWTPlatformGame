@@ -1,11 +1,22 @@
-# SHOOTER game
+# COCKROACH game
 ##GWT
+Lead your cockroach to eat as much crumbs as possible.<br>
+Watch out for poisoned crumbs and time left<br>
 <br>
-My first game in GoogleWeb Toolkit (GWT)  <br>
+### Moving:
+Move your cockroach with mouse.<br>
+Watch - it dies when clicked on it<br>
+each crumb eaten adds additional time<br>
+poisoned crumbs add negative time amount !! <br>
+ENJOY!!<br>
+<br>
+### About:
+My first platform game in GoogleWeb Toolkit (GWT)  <br>
 A simple game for web browsers <br>
 with graphics by @matned666 <br>
+with sounds edited by @matned666 <br>
 <br>
-For more informations check my website at:
+For more information check my website at:
 <html><a href="https://mrndesign.eu/">https://mrndesign.eu</a></html>
 <br>
 Check it out and dont forget to send a feedback !! ;-)

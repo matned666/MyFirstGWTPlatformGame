@@ -2,6 +2,8 @@ package ey.mrndesign.matned.client.utils;
 
 public class Images {
 
+//    images list
+
     public static final String BACKGROUND_IMAGE = "bckg1.jpg";
     public static final String START_HERO_IMAGE = "h-r-stand1.png";
 
@@ -17,8 +19,6 @@ public class Images {
 
 
     public static final String PNG = ".png";
-    public static final String JPG = ".jpg";
-
 
     public static final String POISONEDCRUMB = "poisonedcrumb";
 }
