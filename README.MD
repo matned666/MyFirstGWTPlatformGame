@@ -9,12 +9,14 @@ Watch - it dies when clicked on it<br>
 each crumb eaten adds additional time<br>
 poisoned crumbs add negative time amount !! <br>
 ENJOY!!<br>
+![alt text](https://raw.githubusercontent.com/matned666/MyFirstGWTPlatformGame/master/war/img/Screenshot_5.png)
 <br>
 ### About:
 My first platform game in GoogleWeb Toolkit (GWT)  <br>
 A simple game for web browsers <br>
 with graphics by @matned666 <br>
 with sounds edited by @matned666 <br>
+<br>
 <br>
 For more information check my website at:
 <html><a href="https://mrndesign.eu/">https://mrndesign.eu</a></html>
