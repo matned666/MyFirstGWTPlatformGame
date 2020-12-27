@@ -2,6 +2,8 @@ package ey.mrndesign.matned.client.view;
 
 import ey.mrndesign.matned.client.model.MouseListener;
 
+import static ey.mrndesign.matned.client.utils.Constants.ENVIRONMENT_FRAME;
+
 public class Environment implements ViewEnvironment{
 
     private String image;
@@ -10,6 +12,7 @@ public class Environment implements ViewEnvironment{
     private double xSize;
     private double ySize;
     private boolean step;
+    private double frame;
 
     public Environment(String image, double xPos, double yPos, double xSize, double ySize) {
         this.image = image;
@@ -17,6 +20,7 @@ public class Environment implements ViewEnvironment{
         this.yPos = yPos;
         this.xSize = xSize;
         this.ySize = ySize;
+        this.frame = ENVIRONMENT_FRAME;
         step = false;
     }
 
@@ -25,6 +29,15 @@ public class Environment implements ViewEnvironment{
         double mouseX = MouseListener.getInstance().getMouseX();
         double mouseY = MouseListener.getInstance().getMouseY();
         return mouseX >= xPos && mouseX <= xPos+xSize && mouseY >= yPos && mouseY <= yPos+ySize;
+    }
+
+    @Override
+    public boolean collisionWith(ViewEnvironment environment) {
+        double eXPos = environment.getxPos();
+        double eYPos = environment.getyPos();
+        double eXSize = environment.getxSize();
+        double eYSize = environment.getySize();
+        return (xPos+xSize-frame >= eXPos) && (yPos+ySize-frame >= eYPos) && (xPos+frame <= eXPos+eXSize) && (yPos+frame <= eYPos+eYSize);
     }
 
     @Override

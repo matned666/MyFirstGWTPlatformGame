@@ -19,8 +19,8 @@ public class Paint {
         for (ViewEnvironment el : environment) {
             Paint.onCanva(context, el.getImage(), el.getxPos(), el.getyPos(), el.getxSize(), el.getySize());
         }
-        context.strokeText("X: " + MouseListener.getInstance().getMouseX(), 12, 20 + 10);
-        context.strokeText("Y: " + MouseListener.getInstance().getMouseY(), 12, 20 + 20);
-        context.strokeText("Frame: " + TimeWrapper.getInstance().getFrameNo(), 12, 20 + 30);
+//        context.strokeText("X: " + MouseListener.getInstance().getMouseX(), 12, 20 + 10);
+//        context.strokeText("Y: " + MouseListener.getInstance().getMouseY(), 12, 20 + 20);
+//        context.strokeText("Frame: " + TimeWrapper.getInstance().getFrameNo(), 12, 20 + 30);
     }
 }

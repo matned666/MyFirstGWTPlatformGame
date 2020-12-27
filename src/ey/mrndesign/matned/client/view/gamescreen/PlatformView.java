@@ -35,10 +35,11 @@ public class PlatformView implements GameContract.View {
     private String backgroundImage;
     private List<ViewEnvironment> environment;
     private ViewEnvironment hero;
-    boolean mouseDown;
+    private boolean mouseDown;
     private Direction currentDirection;
     private boolean isDead;
-
+    private int points;
+    private int timeLeft;
 
     public PlatformView(ScreenManagerInterface listener, CanvasScreen screen) {
         this.listener = listener;
@@ -51,6 +52,8 @@ public class PlatformView implements GameContract.View {
         environment.add(hero);
         mouseDown = false;
         isDead = false;
+        points = 0;
+        timeLeft = DEFAULT_START_TIME;
         addKeyListeners();
     }
 
@@ -59,7 +62,16 @@ public class PlatformView implements GameContract.View {
         Paint.onCanva(context, backgroundImage, 0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
         if (mouseDown) onMouseDown();
         standardView(environment, context);
-
+        context.strokeText("Points: " + points, 12, 20 + 40);
+        context.strokeText("Time left: " + timeLeft, 12, 20 + 50);
+        checkIfGotCrumbs();
+        putCrumb();
+        if(TimeWrapper.getInstance().getFrameNo() % 3 == 0)
+            timeLeft -= 1;
+        if (timeLeft == 0) {
+            isDead = true;
+            presenter.action(MoveType.DEAD, hero.getxPos(), hero.getyPos());
+        }
     }
 
     @Override
@@ -83,6 +95,26 @@ public class PlatformView implements GameContract.View {
     public void onDeath() {
         hero.setImage(HeroView.image(MoveType.DEAD, currentDirection, hero.getPrefix()));
         GameAudio.deathSound();
+    }
+
+    @Override
+    public void onCrumbPut(String image, double xPos, double yPos, double size) {
+        environment.add(new Environment(image, xPos, yPos, size, size));
+    }
+
+    @Override
+    public void onCrumbEaten(ViewEnvironment env, int points, int additionalTime) {
+        this.points = points;
+        this.environment.remove(env);
+        this.timeLeft += additionalTime;
+        GameAudio.eatSound();
+    }
+
+    @Override
+    public void onPoisonedCrumbEaten(ViewEnvironment env, int additionalTime) {
+        this.environment.remove(env);
+        this.timeLeft += additionalTime;
+        GameAudio.eatPoisonSound();
     }
 
     private void addKeyListeners() {
@@ -117,6 +149,22 @@ public class PlatformView implements GameContract.View {
         if (!isDead) presenter.action(MoveType.STAND, hero.getxPos(), hero.getyPos());
     }
 
+
+    private void checkIfGotCrumbs() {
+        for (int i = 1; i < environment.size(); i++) {
+            if (hero.collisionWith(environment.get(i))){
+                presenter.eatCrumb(environment.get(i));
+                return;
+            }
+
+        }
+    }
+
+    private void putCrumb() {
+        if(TimeWrapper.getInstance().getFrameNo() % 200 == 0 || TimeWrapper.getInstance().getFrameNo() == 10){
+            presenter.action(MoveType.PUT_NEW_CRUMB);
+        }
+    }
 
 
 }

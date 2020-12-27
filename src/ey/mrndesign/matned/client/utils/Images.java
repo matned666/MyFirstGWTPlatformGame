@@ -9,4 +9,16 @@ public class Images {
     public static final String START_GAME_BUTTON_MOUSE_ON = "menu-start-button-t.jpg";
     public static final String START_GAME_BUTTON_CLICK = "menu-start-button-s.jpg";
 
+
+
+    public static final String SMALL_CRUMB = "crumb-1";
+    public static final String MEDIUM_CRUMB = "crumb-2";
+    public static final String LARGE_CRUMB = "crumb-3";
+
+
+    public static final String PNG = ".png";
+    public static final String JPG = ".jpg";
+
+
+    public static final String POISONEDCRUMB = "poisonedcrumb";
 }

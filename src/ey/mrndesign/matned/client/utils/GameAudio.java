@@ -18,6 +18,14 @@ public class GameAudio {
         sound(MOUSE_CLICK_SOUND);
     }
 
+    public static void eatSound(){
+        sound(EAT_SOUND);
+    }
+
+     public static void eatPoisonSound(){
+        sound(POISONED_SOUND);
+    }
+
     private static void sound(String sound) {
         Audio makeAudio;
         makeAudio = Audio.createIfSupported();

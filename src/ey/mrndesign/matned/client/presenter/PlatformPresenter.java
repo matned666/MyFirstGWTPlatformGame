@@ -5,6 +5,11 @@ import ey.mrndesign.matned.client.contract.gamescreen.MoveType;
 import ey.mrndesign.matned.client.model.Game;
 import ey.mrndesign.matned.client.model.GameCore;
 import ey.mrndesign.matned.client.model.MouseListener;
+import ey.mrndesign.matned.client.model.object.Crumb;
+import ey.mrndesign.matned.client.view.ViewEnvironment;
+
+import static ey.mrndesign.matned.client.utils.Constants.CANVAS_HEIGHT;
+import static ey.mrndesign.matned.client.utils.Constants.CANVAS_WIDTH;
 
 public class PlatformPresenter implements GameContract.Presenter {
 
@@ -15,6 +20,16 @@ public class PlatformPresenter implements GameContract.Presenter {
         this.view = view;
         this.game = new GameCore();
 
+    }
+
+    @Override
+    public void action(MoveType action) {
+        if (action == MoveType.PUT_NEW_CRUMB) {
+            Crumb crumb = Crumb.crumbLottery();
+            double xPos = Math.random() * (CANVAS_WIDTH - crumb.getSize());
+            double yPos = Math.random() * (CANVAS_HEIGHT - crumb.getSize());
+            view.onCrumbPut(crumb.image(), xPos, yPos, crumb.getSize());
+        }
     }
 
     @Override
@@ -36,6 +51,22 @@ public class PlatformPresenter implements GameContract.Presenter {
             }
 
         }
+    }
+
+    @Override
+    public void eatCrumb(ViewEnvironment environment) {
+        Crumb crumb = Crumb.findByImage(environment.getImage());
+        game.addPoints(crumb);
+//        game.addTime(crumb);
+        assert crumb != null;
+        if (crumb != Crumb.POISONED) view.onCrumbEaten(environment, game.getPoints(), crumb.addTime());
+        else view.onPoisonedCrumbEaten(environment, crumb.addTime());
+    }
+
+    @Override
+    public int timeLeft(int time) {
+        game.addTime(time);
+        return game.getTimeLeft();
     }
 
 

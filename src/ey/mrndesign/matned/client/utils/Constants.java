@@ -8,6 +8,8 @@ public class Constants {
     public static final double CANVAS_HEIGHT = 500;
     public static final double CANVAS_WIDTH = 1000;
 
+    public static final int DEFAULT_START_TIME = 500;
+
     public static final double HERO_HEIGHT = 50;
     public static final double HERO_WIDTH = 50;
     public static final double COCKROACH_SPEED = 4;
@@ -25,6 +27,13 @@ public class Constants {
 
     public static final double MENU_START_GAME_BUTTON_X = 255;
     public static final double MENU_START_GAME_BUTTON_Y = 100;
+
+    public static final double ENVIRONMENT_FRAME = 2;
+
+    public static final double SMALL_CRUMB_SIZE = 10;
+    public static final double MEDIUM_CRUMB_SIZE = 25;
+    public static final double LARGE_CRUMB_SIZE = 40;
+
 
 
 }

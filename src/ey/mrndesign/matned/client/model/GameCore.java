@@ -1,17 +1,41 @@
 package ey.mrndesign.matned.client.model;
 
 import ey.mrndesign.matned.client.contract.gamescreen.Direction;
+import ey.mrndesign.matned.client.model.object.Crumb;
 import ey.mrndesign.matned.client.model.object.Hero;
 import ey.mrndesign.matned.client.model.object.Species;
 
 public class GameCore implements Game {
 
+    private int points;
     private Species hero;
     private double angle;
+    private int timeLeft;
 
     public GameCore() {
         hero = new Hero();
         angle = 0;
+        points = 0;
+    }
+
+    @Override
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    @Override
+    public void addTime(int additionalTime) {
+        this.timeLeft += additionalTime;
+    }
+
+    @Override
+    public int getPoints() {
+        return points;
+    }
+
+    @Override
+    public void addPoints(Crumb crumb) {
+        points += crumb.points();
     }
 
     @Override
